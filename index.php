@@ -273,7 +273,8 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>多图上传系统</title>
+    <title>简约图床</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <style>
         :root {
             --primary-color: #4CAF50;
@@ -647,7 +648,7 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
 </head>
 <body>
     <div class="header">
-        <h1>多图上传系统</h1>
+        <h1>简约图床</h1>
         <div class="password-info">
             <span class="date-display">今日日期：<?php echo date('ymd'); ?></span>
             <a href="?logout=1" class="logout"><i class="fas fa-sign-out-alt"></i> 退出登录</a>
