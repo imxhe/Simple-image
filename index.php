@@ -476,6 +476,29 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
             display: block;
         }
         
+        /* 文件名显示样式 */
+        .file-name-display {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-bottom-right-radius: var(--border-radius);
+            max-width: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover .file-name-display {
+            opacity: 1;
+        }
+        
         /* 操作按钮 - 移动端优化 */
         .action-buttons {
             position: absolute;
@@ -692,6 +715,7 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
                 $delete_token = md5($_SESSION['authenticated']);
             ?>
                 <div class="gallery-item" tabindex="0">
+                    <div class="file-name-display"><?php echo htmlspecialchars($filename); ?></div>
                     <img src="<?php echo htmlspecialchars($file); ?>" alt="上传的图片" loading="lazy">
                     <div class="action-buttons">
                         <button class="action-btn copy-btn" onclick="copyToClipboard('<?php echo $file_url; ?>')">
