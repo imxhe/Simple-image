@@ -495,7 +495,8 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
             z-index: 1;
         }
         
-        .gallery-item:hover .file-name-display {
+        .gallery-item:hover .file-name-display,
+        .gallery-item.active .file-name-display {
             opacity: 1;
         }
         
@@ -858,7 +859,7 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
             }
         }
         
-        // 移动端触摸事件处理
+        // 移动端触摸事件处理和悬停处理
         document.addEventListener('DOMContentLoaded', function() {
             const galleryItems = document.querySelectorAll('.gallery-item');
             
@@ -866,6 +867,7 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
                 let tapTimer;
                 let startX, startY;
                 
+                // 触摸事件处理
                 item.addEventListener('touchstart', function(e) {
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
@@ -896,13 +898,28 @@ $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : 
                     }
                     this.classList.remove('active');
                 }, {passive: true});
+                
+                // 鼠标悬停事件处理
+                item.addEventListener('mouseenter', function() {
+                    this.querySelector('.action-buttons').style.opacity = '1';
+                    this.querySelector('.file-name-display').style.opacity = '1';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.querySelector('.action-buttons').style.opacity = '0';
+                    this.querySelector('.file-name-display').style.opacity = '0';
+                });
             });
             
-            // 点击其他地方隐藏按钮
+            // 点击外部区域的处理逻辑
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('.gallery-item')) {
-                    document.querySelectorAll('.action-buttons').forEach(btn => {
-                        btn.style.opacity = '0';
+                    document.querySelectorAll('.gallery-item').forEach(item => {
+                        // 只重置通过触摸/点击激活的按钮，不影响悬停状态
+                        if (!item.matches(':hover')) {
+                            item.querySelector('.action-buttons').style.opacity = '0';
+                            item.querySelector('.file-name-display').style.opacity = '0';
+                        }
                     });
                 }
             });
